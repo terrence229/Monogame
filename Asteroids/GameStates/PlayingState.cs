@@ -13,59 +13,72 @@ namespace Asteroids.GameStates
         public Player thePlayer;
         Score score;
         Target target;
-        GameObjectList bullets;
-
-        private const int SHOOT_COOLDOWN = 20;
-        private int shootTimer = 30;
-        int bulletStartSpeed = 500;
+        Bullet bullet;
+        AsteroidEnemys asteroid;
+        //GameObjectList asteroid = new GameObjectList();
 
         public PlayingState()
         {
-
             Add(new SpriteGameObject("spr_background"));
-            Add(bullets = new GameObjectList());
-            target = new Target();
+            asteroid = new AsteroidEnemys();
             thePlayer = new Player();
-            Add(thePlayer);
+            target = new Target();
             score = new Score();
-            Add(score);
 
-        }
+            Add(asteroid);
+            Add(thePlayer);
+            Add(target);
+            Add(score);
+        }       
 
         public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
 
-            foreach (Bullet bullets in bullets.Children)
+
+
+            base.Update(gameTime);
+            //bullet collision with target
+            if (bullet != null && bullet.CollidesWith(target))
             {
-                if (bullets.CollidesWith(target))
-                {
-                    shootTimer = 30;
-                    Add(score);
-                    //target.position = new Vector2(GameEnvironment.Random.Next(GameEnvironment.Screen.X), GameEnvironment.Random.Next(-1000, -20));
-                }
+                target.Reset();
+                score.AddScore();
+                RemoveBullet();
+            }
+            //player collision asteroids
+            if (thePlayer.CollidesWith(asteroid))
+            {
+                GameEnvironment.GameStateManager.SwitchTo("GameOverState");
+            }
+            if (score.GameScore == 100)
+            {
+                GameEnvironment.GameStateManager.SwitchTo("WinState");
             }
         }
 
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
-
-            if (inputHelper.MouseLeftButtonPressed() && shootTimer > SHOOT_COOLDOWN)
+            // checks if a bullet can be shot or removed and adds/removes the bullet
+            if (inputHelper.MouseLeftButtonPressed())
             {
-                //crosshair.Expand(SHOOT_COOLDOWN);
-                bullets.Add(new Bullet(new Vector2(thePlayer.Position.X, thePlayer.Position.Y), thePlayer.AngularDirection * bulletStartSpeed));
-                shootTimer = 15;
-            }else if (inputHelper.MouseLeftButtonPressed() && shootTimer < SHOOT_COOLDOWN)
-            {
-                bullets.Velocity = thePlayer.AngularDirection * -bulletStartSpeed ;
+                if (bullet == null)
+                {
+                    // adds bullet
+                    bullet = new Bullet(thePlayer);
+                    Add(bullet);
+                }
+                else
+                    RemoveBullet();
             }
-
-            
+        }
+        // gives a more overseeable removebullet statement
+        private void RemoveBullet()
+        {
+            Remove(bullet);
+            bullet = null;
         }
 
     }
 }
 
 
-//new Vector2(bulletStartSpeed * thePlayer.AngularDirection)  

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Asteroids.GameManagement;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,31 +8,27 @@ using System.Threading.Tasks;
 
 namespace Asteroids.GameObjects
 {
-    class Bullet : SpriteGameObject
+    class Bullet : RotatingSpriteGameObject
     {
         public Player thePlayer;
-        new Vector2 accelaration;
-        public Bullet(Vector2 position, Vector2 velocity) : base("spr_Bullet")
+        int bulletStartSpeed = 500;
+        public Bullet(Player player) : base("spr_Bullet")
         {
-            thePlayer = new Player();
-            
-
-            this.position = position;
+            thePlayer = player;
             Origin = Center;
-            this.velocity = velocity;
-            //accelaration = new Vector2(0, 15);
-
-            
+            // takes over player poision and gives velocity
+            position = thePlayer.Position;
+            velocity = thePlayer.AngularDirection * bulletStartSpeed;
         }
-        
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-
-            velocity += accelaration;
-            velocity *= new Vector2(0.99f, 1);
-
+            // if bullet is out of bounds the player loses
+            if (Position.X < 0 || Position.X > GameEnvironment.Screen.X || Position.Y < 0 || Position.Y > GameEnvironment.Screen.Y)
+            {
+                GameEnvironment.GameStateManager.SwitchTo("GameOverState");
+            }
         }
-       
     }
 }

@@ -6,24 +6,21 @@ using System.Threading.Tasks;
 
 namespace Asteroids.GameStates
 {
-    class TitleScreenState : GameObjectList
+    class WinState : GameObjectList
     {
-        public TitleScreenState()
+        public WinState()
         {
-            Add(new SpriteGameObject("spr_titlescreen"));
-            
+            Add(new SpriteGameObject("spr_mushroom"));
         }
 
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
-            //moves the player to the game
             if (inputHelper.AnyKeyPressed == true)
             {
-                GameEnvironment.GameStateManager.SwitchTo("PlayingState");
+                GameEnvironment.GameStateManager.SwitchTo("TitleScreenState");
             }
 
         }
-
     }
 }

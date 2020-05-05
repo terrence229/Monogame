@@ -9,9 +9,14 @@ namespace Asteroids.GameObjects
 {
     class Target : SpriteGameObject
     {
-        public Target() : base("spr_mushroom.png")
+        public Target() : base("spr_mushroom")
         {
-            position = new Vector2(GameEnvironment.Random.Next(GameEnvironment.Screen.X), GameEnvironment.Random.Next(-1000, -20));
+            Reset();
+        }
+        public override void Reset()
+        {
+            base.Reset();
+            position = new Vector2(GameEnvironment.Random.Next(GameEnvironment.Screen.X), GameEnvironment.Random.Next(GameEnvironment.Screen.Y));
         }
     }
 }
