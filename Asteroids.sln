@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asteroids", "Asteroids\Asteroids.csproj", "{95FD5F6E-DAC7-406F-9B47-F68C66DB2696}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hertentamen", "Asteroids\Hertentamen.csproj", "{95FD5F6E-DAC7-406F-9B47-F68C66DB2696}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

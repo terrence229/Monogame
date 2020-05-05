@@ -4,12 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace FlappyBird
+namespace Asteroids.GameManagement
 {
-    /// <summary>
-    /// SpriteGameObject that handles rotated sprites. Overrides Draw method WITHOUT call to base.Draw.
-    /// </summary>
     class RotatingSpriteGameObject : SpriteGameObject
     {
         protected GameObject targetObject;
@@ -89,11 +87,12 @@ namespace FlappyBird
         /// <summary>
         /// Clears the targetObject so it won't point towards it anymore
         /// </summary>
-        public void StopLookingAtTarget() {
+        public void StopLookingAtTarget()
+        {
             targetObject = null;
             this.offsetDegrees = 0;
         }
-        
+
         /// <summary>
         /// Updates the angle based on the position and the position of the target object
         /// </summary>
@@ -102,7 +101,7 @@ namespace FlappyBird
         {
             if (targetObject != null)
             {
-                Vector2 targetVector = targetObject.GlobalPosition - GlobalPosition;              
+                Vector2 targetVector = targetObject.GlobalPosition - GlobalPosition;
                 AngularDirection = targetVector;
             }
 
