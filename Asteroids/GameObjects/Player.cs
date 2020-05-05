@@ -20,8 +20,10 @@ namespace Asteroids.GameObjects
 
         public override void HandleInput(InputHelper inputHelper)
         {
+
             base.HandleInput(inputHelper);
-            float Movementspeed = 200;
+            float slowdownspeed = 0.9f;
+            /*
             if (inputHelper.IsKeyDown(Keys.D))
             {
                 velocity.X = Movementspeed;
@@ -30,21 +32,27 @@ namespace Asteroids.GameObjects
             {
                 velocity.X = -1 * Movementspeed;
             }
+            */
+            AngularDirection = inputHelper.MousePosition - new Vector2(400, 300);
+            
             if (inputHelper.IsKeyDown(Keys.W))
             {
-                velocity.Y = -1 * Movementspeed;
+                velocity += AngularDirection * 5;
             }
-            if (inputHelper.IsKeyDown(Keys.S))
+            else if (inputHelper.IsKeyDown(Keys.S))
             {
-                velocity.Y = Movementspeed;
+                velocity -= AngularDirection * 5;
             }
-            else
+            else if (inputHelper.IsKeyDown(Keys.A))
             {
-                velocity.Y = velocity.Y * 0.9f;
-                velocity.X = velocity.X * 0.9f;
+                Degrees -= 4;
             }
-            AngularDirection = inputHelper.MousePosition - new Vector2(400, 300);
-
+            else if (inputHelper.IsKeyDown(Keys.D)) 
+            {
+                Degrees += 4;
+            }else{
+                velocity *= slowdownspeed;
+            }
         }
     }
 }
