@@ -13,5 +13,14 @@ namespace Asteroids.GameStates
             Add(new SpriteGameObject("spr_gameover"));
         }
 
+        public override void HandleInput(InputHelper inputHelper)
+        {
+            base.HandleInput(inputHelper);
+            if (inputHelper.AnyKeyPressed == true)
+            {
+                GameEnvironment.GameStateManager.SwitchTo("TitleScreenState");
+            }
+        }
+
     }
 }

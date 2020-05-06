@@ -20,7 +20,6 @@ namespace Asteroids.GameStates
             {
                 GameEnvironment.GameStateManager.SwitchTo("TitleScreenState");
             }
-
         }
     }
 }

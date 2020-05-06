@@ -10,8 +10,11 @@ namespace Asteroids.GameObjects
 {
     class AsteroidEnemys : RotatingSpriteGameObject
     {
-        public AsteroidEnemys() : base("spr_rock3")
+
+        public int rocknumber = 0;
+        public AsteroidEnemys(String rocktype, int rocknumber) : base(rocktype)
         {
+            this.rocknumber = rocknumber;
             this.origin = Center;
             Reset();
         }
@@ -26,6 +29,16 @@ namespace Asteroids.GameObjects
 
         public override void Update(GameTime gameTime)
         {
+            /*
+            if (rocknumber < 0)
+                visible = false;
+            if (rocknumber == 0)
+                sprite = new SpriteSheet("spr_rock1");
+            if (rocknumber == 1)
+                sprite = new SpriteSheet("spr_rock2");
+            if (rocknumber == 2)
+                sprite = new SpriteSheet("spr_rock3");
+        */
             base.Update(gameTime);
             WrapScreen();
         }

@@ -14,28 +14,37 @@ namespace Asteroids.GameStates
         Score score;
         Target target;
         Bullet bullet;
-        AsteroidEnemys asteroid;
-        //GameObjectList asteroid = new GameObjectList();
+        GameObjectList asteroid = new GameObjectList();
+        String[] asteroidscale = new string[3];
+
+        int randomasteroid;
 
         public PlayingState()
         {
             Add(new SpriteGameObject("spr_background"));
-            asteroid = new AsteroidEnemys();
             thePlayer = new Player();
             target = new Target();
             score = new Score();
 
-            Add(asteroid);
             Add(thePlayer);
             Add(target);
             Add(score);
+            asteroidscale[0] = "spr_rock1";
+            asteroidscale[1] = "spr_rock2";
+            asteroidscale[2] = "spr_rock3";
+
+            //loading in 3 random asteroids
+            for (int r = 0; r < 3; r++)
+            {
+                randomasteroid = GameEnvironment.Random.Next(3);
+                asteroid.Add(new AsteroidEnemys(asteroidscale[randomasteroid], randomasteroid));
+            }
+
+            Add(asteroid);
         }       
 
         public override void Update(GameTime gameTime)
         {
-
-
-
             base.Update(gameTime);
             //bullet collision with target
             if (bullet != null && bullet.CollidesWith(target))
@@ -45,9 +54,10 @@ namespace Asteroids.GameStates
                 RemoveBullet();
             }
             //player collision asteroids
-            if (thePlayer.CollidesWith(asteroid))
+            foreach (AsteroidEnemys asteroid in asteroid.Children)
             {
-                GameEnvironment.GameStateManager.SwitchTo("GameOverState");
+                if (thePlayer.CollidesWith(asteroid))
+                    GameEnvironment.GameStateManager.SwitchTo("GameOverState");
             }
             if (score.GameScore == 100)
             {
