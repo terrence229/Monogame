@@ -17,11 +17,18 @@ namespace Asteroids.GameObjects
             position.X = GameEnvironment.Screen.X / 2;
             position.Y = GameEnvironment.Screen.Y / 2;
 
-            // if player goes out of bound he loses
-            if (position.X < 0 || position.X > GameEnvironment.Screen.X || position.Y < 0 || position.Y > GameEnvironment.Screen.Y)
-                GameEnvironment.GameStateManager.SwitchTo("GameOverState");
+
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            // if player goes out of bound he loses
+            if (this.position.X < 0 || this.position.X > GameEnvironment.Screen.X || this.position.Y < 0 || this.position.Y > GameEnvironment.Screen.Y)
+            {
+                GameEnvironment.GameStateManager.SwitchTo("GameOverState");
+            }
+        }
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
