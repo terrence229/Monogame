@@ -39,7 +39,6 @@ namespace Asteroids.GameStates
                 randomasteroid = GameEnvironment.Random.Next(3);
                 asteroid.Add(new AsteroidEnemys(asteroidscale[randomasteroid], randomasteroid));
             }
-
             Add(asteroid);
         }       
 
@@ -59,6 +58,7 @@ namespace Asteroids.GameStates
                 if (thePlayer.CollidesWith(asteroid))
                     GameEnvironment.GameStateManager.SwitchTo("GameOverState");
             }
+            //wincondition
             if (score.GameScore == 100)
             {
                 GameEnvironment.GameStateManager.SwitchTo("WinState");
